@@ -13,11 +13,19 @@ class App extends Component {
   }
 
   componentWillMount() {
+    this.getData();
+  }
+
+  componentDidMount() {
+    setInterval(() => this.getData(), 30000);
+  }
+
+  getData = () => {
     axios.get('https://cors.now.sh/http://data.nba.net/10s/prod/v1/20180423/scoreboard.json')
-      .then(res => {
-        this.setState({games: res.data.games, avail: true})
-      })
-      .catch(err => console.log(err));
+    .then(res => {
+      this.setState({games: res.data.games, avail: true})
+    })
+    .catch(err => console.log(err));
   }
 
   render() {
@@ -39,7 +47,8 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">NBA</h1>
+          <h1 className="App-title">NBA Game Checker</h1>
+          <h4>Game stats update every 30 seconds</h4>
         </header>
           <div className="Game">
           <ul className="List">
